@@ -10,11 +10,43 @@
 <body>
   <main class="container">
     <h1>HearMe</h1>
-    <p>Assistive communication demo — speech, camera, translate, SOS.</p>
-    <div class="cards">
+    <p class="subtitle">Assistive communication web application</p>
+
+    <section>
+      <p>
+        HearMe is a simple web-based system designed to support deaf and hearing-impaired users.
+        The application helps users communicate using speech-to-text and hand gesture detection
+        through a web browser.
+      </p>
+    </section>
+
+    <section>
+      <h2>How HearMe Works</h2>
+      <div class="arch-flow">
+        <div class="arch-box">User<br><span>Browser interaction</span></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">Frontend<br><span>HTML, CSS, JavaScript</span></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">Processing<br><span>STT & Gesture Detection</span></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">Backend<br><span>Node.js & Express</span></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">Database<br><span>Logs Storage</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>System Architecture</h2>
+      <p>
+        The frontend of HearMe is built using HTML, CSS, and JavaScript. Real-time processing
+        is performed in the browser, while a Node.js backend is used to store and manage data.
+      </p>
+    </section>
+
+    <section class="cards">
       <a class="card" href="live.html">Live Interaction</a>
       <a class="card" href="dashboard.html">Dashboard (Logs)</a>
-    </div>
+    </section>
   </main>
 </body>
 </html>

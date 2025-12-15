@@ -22,6 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
     recognition.interimResults = true;
     recognition.continuous = true;
 
+    // --- STT status handling (REAL state, not button state) ---
+    recognition.onstart = () => {
+      const s = document.getElementById('stt-status');
+      if (s) {
+        s.textContent = 'Status: Listening…';
+        s.className = 'stt-status listening';
+      }
+      if (startBtn) startBtn.classList.add('disabled-look');
+      if (stopBtn) stopBtn.classList.add('listening');
+    };
+
     recognition.onresult = (event) => {
       const last = event.results[event.results.length - 1];
       const text = last[0].transcript;
@@ -35,8 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     recognition.onend = () => {
       listening = false;
+      const s = document.getElementById('stt-status');
+      if (s) {
+        s.textContent = 'Status: Not listening';
+        s.className = 'stt-status idle';
+      }
       if (startBtn) startBtn.disabled = false;
       if (stopBtn) stopBtn.disabled = true;
+      if (startBtn) startBtn.classList.remove('disabled-look');
+      if (stopBtn) stopBtn.classList.remove('listening');
     };
   }
 
@@ -46,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!recognition) return;
     try {
       recognition.start();
-      listening = true;
       startBtn.disabled = true;
       stopBtn.disabled = false;
     } catch (err) {
@@ -61,9 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error('Error stopping recognition', err);
     }
-    listening = false;
-    if (startBtn) startBtn.disabled = false;
-    if (stopBtn) stopBtn.disabled = true;
 
     const text = transcriptEl?.textContent || '';
     if (text.trim()) {

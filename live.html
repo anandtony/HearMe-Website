@@ -18,15 +18,18 @@
     <div>
       <section class="panel">
         <h3>Microphone (Speech to Text)</h3>
+        <p class="hint">Speak clearly into the microphone. Your speech will be converted into text in real time.</p>
         <div class="controls">
           <button id="start-listen" class="primary">Start Listening</button>
           <button id="stop-listen" disabled>Stop</button>
         </div>
         <div id="transcript" class="output">Transcript will appear here.</div>
+        <div id="stt-status" class="stt-status idle">Status: Not listening</div>
       </section>
 
       <section class="panel">
         <h3>Translate</h3>
+        <p class="hint">Translate detected or typed text into another language.</p>
         <input id="translate-input" placeholder="Text or transcript" />
         <select id="translate-target">
           <option value="hi">Hindi (hi)</option>
@@ -39,6 +42,7 @@
 
       <section class="panel">
         <h3>SOS</h3>
+        <p class="hint">Use this button to send an emergency alert.</p>
         <button id="sos-btn" class="danger">Send SOS</button>
         <div id="sos-status" class="output status-small">No SOS sent yet.</div>
       </section>
@@ -47,20 +51,12 @@
     <div>
       <section class="panel">
         <h3>Camera & Gesture Detection</h3>
+        <p class="hint">Show your hand in front of the camera to detect sign gestures.</p>
         <!-- video and canvas overlay with hint box -->
         <div style="position:relative; display:inline-block;">
           <video id="video" width="640" height="480" autoplay muted playsinline></video>
           <canvas id="overlay" width="640" height="480" style="position:absolute; left:0; top:0; pointer-events:none;"></canvas>
 
-          <!-- Hint box: translucent rectangle and text -->
-          <div id="hint-box" style="
-              position:absolute; left:50%; top:8px; transform:translateX(-50%);
-              background: rgba(255,255,255,0.86);
-              padding:8px 12px; border-radius:8px; box-shadow:0 6px 16px rgba(0,0,0,0.08);
-              font-size:14px; color:#0f172a; display:flex; gap:10px; align-items:center;">
-            <strong style="margin-right:6px;">Hand Guide</strong>
-            <span style="color:#6b7280">Place your hand inside the frame — keep fingers visible</span>
-          </div>
 
           <!-- Center guide rectangle drawn by CSS (subtle) -->
           <div id="guide-rect" style="
