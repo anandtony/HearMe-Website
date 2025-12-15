@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HearMe — Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+  <header>
+    <a href="index.html">← Home</a>
+    <h2>Dashboard — Logs</h2>
+  </header>
+
+  <main class="container">
+    <div class="panel">
+      <button id="refresh-logs">Refresh Logs</button>
+      <table id="logs-table">
+        <thead>
+          <tr><th>Time</th><th>Type</th><th>User</th><th>Data</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    async function fetchLogs() {
+      try {
+        const res = await fetch('http://localhost:4000/api/logs');
+        const logs = await res.json();
+        const tbody = document.querySelector('#logs-table tbody');
+        tbody.innerHTML = '';
+        logs.forEach(l => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${new Date(l.timestamp).toLocaleString()}</td>
+            <td>${l.type}</td>
+            <td>${l.userId || ''}</td>
+            <td><pre>${JSON.stringify(l.data)}</pre></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        alert('Error fetching logs: ' + err.message);
+      }
+    }
+
+    document.getElementById('refresh-logs').addEventListener('click', fetchLogs);
+    // Load on open
+    fetchLogs();
+  </script>
+</body>
+</html>

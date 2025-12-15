@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HearMe — Live</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- small inline favicon placeholder to avoid 404 -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+  <header>
+    <a href="index.html">← Home</a>
+    <h2>Live Interaction</h2>
+  </header>
+
+  <main class="container two-col">
+    <div>
+      <section class="panel">
+        <h3>Microphone (Speech to Text)</h3>
+        <div class="controls">
+          <button id="start-listen" class="primary">Start Listening</button>
+          <button id="stop-listen" disabled>Stop</button>
+        </div>
+        <div id="transcript" class="output">Transcript will appear here.</div>
+      </section>
+
+      <section class="panel">
+        <h3>Translate</h3>
+        <input id="translate-input" placeholder="Text or transcript" />
+        <select id="translate-target">
+          <option value="hi">Hindi (hi)</option>
+          <option value="ta">Tamil (ta)</option>
+          <option value="en">English (en)</option>
+        </select>
+        <button id="translate-btn">Translate</button>
+        <div id="translate-output" class="output">Translated text will appear here.</div>
+      </section>
+
+      <section class="panel">
+        <h3>SOS</h3>
+        <button id="sos-btn" class="danger">Send SOS</button>
+        <div id="sos-status" class="output status-small">No SOS sent yet.</div>
+      </section>
+    </div>
+
+    <div>
+      <section class="panel">
+        <h3>Camera & Gesture Detection</h3>
+        <!-- video and canvas overlay with hint box -->
+        <div style="position:relative; display:inline-block;">
+          <video id="video" width="640" height="480" autoplay muted playsinline></video>
+          <canvas id="overlay" width="640" height="480" style="position:absolute; left:0; top:0; pointer-events:none;"></canvas>
+
+          <!-- Hint box: translucent rectangle and text -->
+          <div id="hint-box" style="
+              position:absolute; left:50%; top:8px; transform:translateX(-50%);
+              background: rgba(255,255,255,0.86);
+              padding:8px 12px; border-radius:8px; box-shadow:0 6px 16px rgba(0,0,0,0.08);
+              font-size:14px; color:#0f172a; display:flex; gap:10px; align-items:center;">
+            <strong style="margin-right:6px;">Hand Guide</strong>
+            <span style="color:#6b7280">Place your hand inside the frame — keep fingers visible</span>
+          </div>
+
+          <!-- Center guide rectangle drawn by CSS (subtle) -->
+          <div id="guide-rect" style="
+              position:absolute; left:50%; top:50%; width:42%; height:58%;
+              transform:translate(-50%,-50%); border:2px dashed rgba(11,114,255,0.16);
+              border-radius:12px; pointer-events:none;"></div>
+        </div>
+
+        <div class="controls" style="margin-top:10px;">
+          <button id="start-camera" class="">Start Camera</button>
+          <button id="stop-camera" disabled>Stop Camera</button>
+        </div>
+
+        <!-- Custom gesture trainer controls -->
+        <div id="custom-gesture-controls" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <select id="cg-label" aria-label="Choose label">
+            <option value="thumbs_up">Thumbs Up</option>
+            <option value="open_palm">Open Palm</option>
+            <option value="fist">Fist</option>
+            <option value="thumbs_down">Thumbs Down</option>
+          </select>
+          <button id="cg-record">Record Sample</button>
+          <input id="cg-upload" type="file" accept="image/*" />
+          <button id="cg-clear">Clear Samples</button>
+          <button id="cg-export">Export</button>
+          <button id="cg-import">Import</button>
+          <input id="cg-import-file" type="file" accept="application/json" style="display:none" />
+          <div id="cg-status" class="status-small" style="margin-left:8px;">Samples: 0</div>
+        </div>
+
+        <div id="camera-status" class="output">Camera stopped.</div>
+        <div id="gesture-label" class="output status-small" style="margin-top:8px;">Detected gesture: <strong>None</strong></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- MediaPipe packages (browser builds) -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+  <script src="main.js"></script>
+</body>
+</html>

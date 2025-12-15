@@ -1,0 +1,11 @@
+# macOS system files
+.DS_Store
+
+# Node dependencies
+node_modules/
+
+# Runtime data
+backend/data/
+
+# Environment variables
+.env
