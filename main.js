@@ -63,6 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
   startBtn?.addEventListener('click', () => {
     if (!recognition) return;
     try {
+      // Clear previous transcript for a fresh session
+      if (transcriptEl) transcriptEl.textContent = '';
+
       recognition.start();
       startBtn.disabled = true;
       stopBtn.disabled = false;
@@ -86,6 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type: 'speech', data: { text }, userId: 'student1' })
         });
+
+        // Show confirmation after successful save
+        const s = document.getElementById('stt-status');
+        if (s) {
+          s.textContent = 'Status: Speech saved ✓';
+          s.className = 'stt-status listening';
+        }
       } catch (err) {
         console.error('Failed to save log', err);
       }
